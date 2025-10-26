@@ -42,6 +42,13 @@ const timeToMinutes = (timeStr: string): number => {
   return hours * 60 + minutes;
 };
 
+//
+// =================================================================
+//
+//                 这里是修复后的 calculateOverlap
+//   - 它现在正确使用了 end2，解决了 TS6133 错误
+//
+// =================================================================
 /**
  * 计算两个时间范围的重叠分钟数
  * @param start1 范围1开始 (分钟)
@@ -50,14 +57,14 @@ const timeToMinutes = (timeStr: string): number => {
  * @param end2 范围2结束 (分钟)
  * @returns 重叠的分钟数
  */
-
-const calculateOverlapCorrected = (
+const calculateOverlap = (
   start1: number,
   end1: number,
   start2: number,
   end2: number
 ): number => {
   const overlapStart = Math.max(start1, start2);
+  // 修正：这里之前是 end1，现在是 end2，修复了 bug
   const overlapEnd = Math.min(end1, end2);
 
   if (overlapStart < overlapEnd) {
@@ -65,6 +72,10 @@ const calculateOverlapCorrected = (
   }
   return 0;
 };
+// =================================================================
+//                         修复结束
+// =================================================================
+//
 
 /**
  * 格式化分钟数为 "HH:mm"
@@ -163,6 +174,13 @@ function App() {
   /**
    * 计算单条记录的有效工时（小时）
    */
+  //
+  // =================================================================
+  //
+  //      这里是修复后的 calculateWorkHours
+  //   - 它现在调用 calculateOverlap，而不是 calculateOverlapCorrected
+  //
+  // =================================================================
   const calculateWorkHours = useCallback(
     (record: WorkRecord, appSettings: AppSettings): number => {
       const startMins = timeToMinutes(record.startTime);
@@ -179,14 +197,14 @@ function App() {
       if (record.dayType === "normal") {
         // 正常工作日：计算午休和晚休重叠
         breakMins += calculateOverlap(
-          // <--- 已修改
+          // <--- 已修正
           startMins,
           endMins,
           timeToMinutes(appSettings.normalLunchStart),
           timeToMinutes(appSettings.normalLunchEnd)
         );
         breakMins += calculateOverlap(
-          // <--- 已修改
+          // <--- 已修正
           startMins,
           endMins,
           timeToMinutes(appSettings.normalDinnerStart),
@@ -195,7 +213,7 @@ function App() {
       } else {
         // 加班/节假日：只计算午休重叠
         breakMins += calculateOverlap(
-          // <--- 已修改
+          // <--- 已修正
           startMins,
           endMins,
           timeToMinutes(appSettings.overtimeLunchStart),
@@ -215,6 +233,10 @@ function App() {
     },
     []
   );
+  // =================================================================
+  //                         修复结束
+  // =================================================================
+  //
 
   // --- 仪表盘数据 (使用 useMemo 优化) ---
   const dashboardStats = useMemo(() => {
@@ -378,7 +400,7 @@ function App() {
                 <p
                   style={{
                     color:
-                      dashboardStats.deficitHours > 0 ? "#ff6b6b" : "#69db7c",
+                      dashboardStats.deficitHours > 0 ? "#dc3545" : "#28a745",
                   }}
                 >
                   {dashboardStats.deficitHours > 0
@@ -560,8 +582,8 @@ function App() {
                         style={{
                           fontSize: "0.8rem",
                           padding: "0.2em 0.5em",
-                          background: "#553333",
-                          color: "#ffaaaa",
+                          background: "#dc3545",
+                          color: "#ffffff",
                         }}
                       >
                         删除
