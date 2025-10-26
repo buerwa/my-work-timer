@@ -50,23 +50,7 @@ const timeToMinutes = (timeStr: string): number => {
  * @param end2 范围2结束 (分钟)
  * @returns 重叠的分钟数
  */
-const calculateOverlap = (
-  start1: number,
-  end1: number,
-  start2: number,
-  end2: number
-): number => {
-  const overlapStart = Math.max(start1, start2);
-  const overlapEnd = Math.min(start1, end1); // 修正：应为 end1 和 end2
 
-  // 修正：应该是 overlapStart < overlapEnd
-  if (overlapStart < overlapEnd) {
-    return overlapEnd - overlapStart;
-  }
-  return 0;
-};
-
-// --- 修正后的 calculateOverlap ---
 const calculateOverlapCorrected = (
   start1: number,
   end1: number,
@@ -194,15 +178,15 @@ function App() {
 
       if (record.dayType === "normal") {
         // 正常工作日：计算午休和晚休重叠
-        breakMins += calculateOverlapCorrected(
-          // 使用修正后的函数
+        breakMins += calculateOverlap(
+          // <--- 已修改
           startMins,
           endMins,
           timeToMinutes(appSettings.normalLunchStart),
           timeToMinutes(appSettings.normalLunchEnd)
         );
-        breakMins += calculateOverlapCorrected(
-          // 使用修正后的函数
+        breakMins += calculateOverlap(
+          // <--- 已修改
           startMins,
           endMins,
           timeToMinutes(appSettings.normalDinnerStart),
@@ -210,8 +194,8 @@ function App() {
         );
       } else {
         // 加班/节假日：只计算午休重叠
-        breakMins += calculateOverlapCorrected(
-          // 使用修正后的函数
+        breakMins += calculateOverlap(
+          // <--- 已修改
           startMins,
           endMins,
           timeToMinutes(appSettings.overtimeLunchStart),
