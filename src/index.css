@@ -1,0 +1,174 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  
+  /* 整体颜色方案调整为浅色 */
+  color-scheme: light; 
+  color: #333333; /* 主要文本颜色 */
+  background-color: #f0f2f5; /* 页面背景色 */
+  
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  width: 100%;
+}
+
+/* 品牌色 - 浅色风格下更柔和的蓝色/绿色 */
+h1, h2, h3 {
+  color: #2c7be5; /* 蓝色 */
+  /* 或者 #28a745; 绿色 */
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #007bff; /* 蓝色按钮背景 */
+  color: white; /* 按钮文字颜色 */
+  cursor: pointer;
+  transition: background-color 0.25s, border-color 0.25s;
+}
+button:hover {
+  background-color: #0056b3; /* 按钮 Hover 效果 */
+  border-color: #0056b3;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+input, select {
+  padding: 0.6em;
+  font-size: 1em;
+  border-radius: 8px;
+  border: 1px solid #ced4da; /* 输入框边框 */
+  background-color: #ffffff; /* 输入框背景 */
+  color: #333333; /* 输入框文字颜色 */
+  margin: 0.25rem;
+}
+
+.app-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.card {
+  background-color: #ffffff; /* 卡片背景 */
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08); /* 柔和的阴影 */
+}
+
+.card h3 {
+  margin-top: 0;
+  color: #333333; /* 卡片标题颜色 */
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.25rem;
+  font-weight: bold;
+  color: #555555; /* 表单标签颜色 */
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.stat-item {
+  background-color: #e9ecef; /* 统计项背景 */
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+.stat-item h4 {
+  margin: 0 0 0.5rem 0;
+  color: #6c757d; /* 统计项标题颜色 */
+  font-size: 0.9rem;
+}
+
+.stat-item p {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #2c7be5; /* 统计项数值颜色 */
+}
+
+.log-list {
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.log-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  border-bottom: 1px solid #e0e0e0; /* 日志分隔线 */
+}
+.log-item:last-child {
+  border-bottom: none;
+}
+
+.time-display {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2c7be5; /* 实时时间颜色 */
+  margin-bottom: 0.5rem;
+}
+
+.countdown {
+  font-size: 1.1rem;
+  color: #6c757d; /* 倒计时文本颜色 */
+}
+
+/* 亏欠工时警告色 */
+.stat-item p[style*="color: rgb(255, 107, 107)"] {
+  color: #dc3545 !important; /* 更亮的红色 */
+}
+/* 达标工时成功色 */
+.stat-item p[style*="color: rgb(105, 219, 124)"] {
+  color: #28a745 !important; /* 更亮的绿色 */
+}
+
+/* 删除按钮颜色调整 */
+.log-item button {
+  background: #dc3545; /* 红色 */
+  color: white;
+}
+.log-item button:hover {
+  background: #c82333;
+}
